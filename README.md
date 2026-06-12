@@ -281,10 +281,26 @@ Question answered:
 - Why a bar chart: Bar charts make category comparisons easy and clear.
 
 # Column Chart — Revenue by Referral Source
-Question answered: Which marketing channel drives the most revenue?
-Why Column: Long category names are easier to read on a vertical axis.
+- Question answered: Which marketing channel drives the most revenue?
+- Why Column: Long category names are easier to read on a vertical axis.
 
+# Doughnut Chart — Order Status Split
+- Question answered: What proportion of orders succeed vs fail?
+- Why a doughnut: Shows proportions clearly with 5 segments.
 
+# Grouped Bar Chart — Order Progress Summary
+- Question answered: What is the total orders for each segment?
+- Why grouped bars: Allows two variables (payment method × order status ) to be compared side by side.
 
+# 2. Key Insights
+- The doughnut chart reveals that 41.4% of all orders fail, nearly 1 in 2 orders is either cancelled or returned. This is the most urgent business issue in the dataset.
+- The line chart shows revenue declining from ~$552K (2023) to ~$480K (2024); a 13% year-on-year drop. June and July consistently show the strongest months - useful for timing proportions and stock planning.
+- The referral source bar chart shows Instagram drives the highest revenue ($275K), next is Email. The referral program contributes the least and may benefit from restructuring.
+- Revenue is remarkably evenly spread across products; chair and printer lead by a narrow margin. Phone lags behind and may need promotional support.
+  
+# ANALYZED BY 
+AKHIMIEN EVELYN
 
+LinkedIn: hhtps://tinyurl.com/mpe7h358
 
+Email: akhimienevelyn.ae@gmail.com
