@@ -297,6 +297,9 @@ Question answered:
 - The line chart shows revenue declining from ~$552K (2023) to ~$480K (2024); a 13% year-on-year drop. June and July consistently show the strongest months - useful for timing proportions and stock planning.
 - The referral source bar chart shows Instagram drives the highest revenue ($275K), next is Email. The referral program contributes the least and may benefit from restructuring.
 - Revenue is remarkably evenly spread across products; chair and printer lead by a narrow margin. Phone lags behind and may need promotional support.
+
+  <img width="1343" height="626" alt="E-Commerce DecodeLabs" src="https://github.com/user-attachments/assets/8b98098e-c4ec-4dab-84b7-b06342458862" />
+
   
 # ANALYZED BY 
 AKHIMIEN EVELYN
