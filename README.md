@@ -50,6 +50,7 @@ Text Columns:
 # PROJECT 2: EXPLORATORY DATA ANALYSIS (EDA)
 # Project Overview
 Exploratory Data Analysis (EDA) is the process of investigating a dataset to discover patterns, spot anomalies, test assumptions, and summarize main characteristics before any modelling or reporting begins. This project applies EDA techniques to a real e-commerce dataset.
+Tool Used: Excel 
 # Goal
 Analyze a dataset to understand its patterns, trends, and distributions using descriptive statistics, outlier detection, and trend identification.
 # Key Requirements And How I Met Them
@@ -66,9 +67,224 @@ Analyze a dataset to understand its patterns, trends, and distributions using de
 | Q3 (75th %) | 4 | 521.57 | 7 | 1,578.48 |
 | Max | 5 | 699.93 | 10 | 3,456.40 |
 
-# Key observation — Mean vs Median gap:
+# Key observation
 1. Mean Total Price ($1,054) is significantly higher than the Median ($824). This $230 gap indicates right-skewed data; a small number of very large orders are pulling the average upward. The median is the more reliable measure of a "typical" order.
-2. 
+2. Trends and Outliers
+Revenue Trends
+
+Monthly Revenue Pattern (2023–2025):
+
+| Year | Total Revenue | YoY Change |
+|--------|-----------|------------|
+| 2023 | ~$552,000 | Baseline |
+| 2024 | ~$480,000 | ▼ −13% |
+| 2025 (Jan–Jun) | ~$231,000 | Partial year |
+
+Peak months identified:
+
+May 2023: $63,837 (highest in 2023)
+
+June 2024: $68,069 (highest overall — anomaly worth investigating)
+
+Revenue by Product:
+
+| Product | Total Revenue | Avg Order Value |
+| ------- | -------- | ------- | 
+| Chair | $195,620 | $1,099.55 |
+| Printer | $195,613 | $1,080.88 |
+| Laptop | $192,127 | $1,110.56 |
+| Tablet | $186,569 | $1,042.28 |
+| Monitor | $175,651 | $1,077.61 |
+| Desk | $167,460 | $984.47 |
+| Phone | $151,722 | $972.57 |
+
+Revenue by Referral Source:
+| Source | Total Revenue | Orders |
+| ------- | --------- | --------- |
+| Instagram | $275,285 | 259 |
+| Email | $261,809 | 255 |
+| Google | $250,441 | 246 |
+| Facebook | $250,411 | 228 |
+| Referral | $226,816 | 212|
+
+Outlier Detection — IQR Method
+
+Result: 8 outlier orders detected
+| Order ID | Product | Total Price | Status |
+| --------- | -------- | ---------- | -------- |
+| ORD200107 | Printer | $3,353.75 | 🔴 Outlier |
+| ORD200326 | Laptop | $3,352.40 | 🔴 Outlier |
+| ORD200328 | Tablet | $3,370.20 | 🔴 Outlier |
+| ORD200469 | Chair | $3,384.90 | 🔴 Outlier | 
+| ORD200632 | Laptop | $3,390.80 | 🔴 Outlier |
+| ORD200789 | Tablet | $3,456.40 | 🔴 Outlier |
+| ORD201065 | Printer | $3,334.00 | 🔴 Outlier |
+| ORD201122 | Monitor | $3,390.95 | 🔴 Outlier |
+
+All 8 are maximum-quantity (5 units) orders at high unit prices. These are legitimate bulk purchases, not data errors but worth tracking separately as potential B2B or VIP customers.
+
+3. Critical Finding
+41.4% Order Failure Rate
+250 orders Cancelled + 247 orders Returned = 497 total failed orders
+This represents 41.4% of all orders far above industry norms (typically 5–15%)
+Recommended action: Investigate which product, channel, or time period has the highest failure rate
+
+Payment Method Performance
+| Payment Method | Order Count | Avg Order Value |
+| --------- | ----------- | ----------- |
+| Credit Card | 234 | $1,127.55 |
+| Gift Card | 230 | $1,070.91 | 
+| Cash | 246 | $1,055.78 |
+| Online | 258 |$1,017.49 |
+| Debit Card | 232 | $1,001.87 |
+
+Coupon Impact on Spending
+| Group | Orders | Avg Order Value |
+| --------- | ----------- | ---------- |
+| Has Coupon | 891 | $1,057.64 |
+| No Coupon | 309 | $1,043.37 |
+
+Coupons attract volume (74.3% usage) but have minimal impact on how much customers spend per order.
+
+# Insight
+1. 41.4% cancellation + return rate (revenue loss)
+2. Revenue declining 13% YoY (2023→2024) (Trend alert)
+3. Instagram drives highest revenue ($275K) (Opportunity)
+4. Credit card users spend 12.6% more (Opportunity)
+5. Coupons barely lift AOV (+1.4%) (Review coupon strategy)
+6. outlier orders — all legitimate bulk buys (VIP customer opportunity)
+7. Phones have lowest revenue of all products (Review product strategy)
+
+# PROJECT 3: SQL DATA ANALYSIS
+# Project Overview
+This project uses SQL queries to extract meaningful insights. SQL (Structured Query Language) is the industry-standard tool for querying, filtering, grouping, and aggregating data stored in databases. This project demonstrates core SQL skills applied to real business questions.
+
+Tool Used: SQL
+# Goal
+Use SQL queries to extract insights from a dataset; writing SELECT queries, using WHERE, ORDER BY, and GROUP BY, and performing basic aggregations (COUNT, SUM, AVG).
+
+# Key Requirements And Queries
+
+# 1. SELECT Queries
+
+- View all orders:
+
+_SELECT * FROM [Decode_ECommerce_Orders]_
+
+- View specific columns:
+
+_SELECT OrderID, Product,Total_Price, Order_Status FROM [Decode_ECommerce_Orders]_
+
+ - View Top highest value orders:
+
+_SELECT TOP 10 OrderID, Product, Quantity, Total_Price FROM [Decode_ECommerce_Orders]_
+
+# 2. WHERE — Filtering Data
+
+- Orders that were delivered;
+
+_SELECT * FROM [Decode_ECommerce_Orders] WHERE Order_Status = 'Delivered'_
+
+- Orders above $3,000:
+
+_SELECT * FROM [Decode_ECommerce_Orders] WHERE Total_Price > 3000_
+
+- Cancelled OR returned orders:
+
+_SELECT * FROM [Decode_ECommerce_Orders] WHERE Order_Status = 'Cancelled' OR Order_Status = 'Returned'_
+
+- Outlier Orders (Above upper fence)
+
+_SELECT * FROM [Decode_ECommerce_Orders] WHERE Total_Price > 3330.41_
+
+- Instagram orders paid by Credit card;
+
+_SELECT * FROM [Decode_ECommerce_Orders] WHERE Referral_Source = 'Instagram' AND Payment_Method = 'Credit Card'_
+
+- Orders with No Coupon used
+
+_SELECT * FROM [Decode_ECommerce_Orders] WHERE Coupon_Code = 'NO COUPON'_
+
+# 3. GROUP BY — Aggregating by Category
+
+- Total Revenue, Orders, Avg Order Value by Product
+
+_SELECT Product, 
+    COUNT(*) AS TotalOrders,
+   SUM(Total_Price) AS TotalRevenue,
+   AVG(Total_Price) AS AvgOrderValue
+  FROM [Decode_ECommerce_Orders]
+GROUP BY Product;_
+
+- Order count by Order status
+
+ _SELECT Order_Status,
+       COUNT(*) AS OrderCount
+      FROM [Decode_ECommerce_Orders]
+     GROUP BY Order_Status_
+
+   - Revenue by Referral source
+
+_SELECT Referral_Source,
+          COUNT(*) AS Orders,
+         SUM(Total_Price) AS TotalRevenue,
+        AVG(Total_Price) AS AvgOrderValue
+FROM [Decode_ECommerce_Orders]
+GROUP BY Referral_Source_
+
+- Revenue by Payment method
+
+_SELECT Payment_Method,
+             COUNT(*) AS Orders,
+            SUM(Total_Price) AS TotalRevenue,
+           AVG(Total_Price) AS AOV
+FROM [Decode_ECommerce_Orders]
+GROUP BY Payment_Method_
+
+# 4. Overall Basic Statistics
+
+_SELECT
+      COUNT(*) AS TotalOrders,
+      SUM(Total_Price) AS TotalRevenue,
+      AVG(Total_Price) AS AvgOrderValue,
+      MIN(Total_Price) AS SmallestOrder,
+      MAX(TOTAL_Price) AS LargestOrder
+FROM [Decode_ECommerce_Orders]_
+
+
+# PROJECT 4: DATA VISUALIZATION 
+# Project Overview
+Data visualization transforms numbers into stories. This project creates multiple chart types to communicate insights from an e-commerce dataset clearly and effectively, demonstrating how the right visual can reveal patterns that raw tables and numbers alone cannot show.
+
+Tools Used: Excel Charts 
+
+# Goal
+Create visual representations of data to communicate insights clearly, selecting appropriate chart types for each question, and using visuals to tell a coherent data story.
+
+# Key Requirements And How I Met Them
+
+# 1. Charts Created
+
+# Line Chart — Monthly Revenue Trend
+Question answered: 
+- How has revenue changed over time?
+- Why a line chart: Line charts are ideal for showing continuous change over time.
+
+Key finding:
+- Revenue peaked in June 2024 at $68,069
+- Overall trend is declining year-on-year (2024 was 13% below 2023)
+- Notable dip in April 2023 ($27,752) and May 2024 ($27,909)
+
+# Bar Chart — Revenue by Product
+Question answered: 
+- Which products generate the most revenue?
+- Why a bar chart: Bar charts make category comparisons easy and clear.
+
+# Column Chart — Revenue by Referral Source
+Question answered: Which marketing channel drives the most revenue?
+Why Column: Long category names are easier to read on a vertical axis.
+
+
 
 
 
